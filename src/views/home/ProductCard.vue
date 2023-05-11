@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="product.imageUrl" alt="product.name" />
+    <img :src="product.imageUrl" :alt="product.name" />
     <div>
       <h5>{{ product.name }}</h5>
       <div>

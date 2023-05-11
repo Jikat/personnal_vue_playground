@@ -39,11 +39,17 @@
   </div>
 </template>
 <script>
-import { mapActions } from "pinia";
+import { accountStore } from "@/stores/account";
 export default {
   name: "LoginPage",
+  setup() {
+    const account_store = accountStore();
+    return { account_store };
+  },
   methods: {
-    ...mapActions("account", ["login"]),
+    login() {
+      this.account_store.login();
+    },
   },
 };
 </script>

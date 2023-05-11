@@ -11,20 +11,34 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "pinia";
 import ProductCard from "./ProductCard.vue";
+import { productStore } from "@/stores/product";
 
 export default {
   name: "ProductGrid",
+  setup() {
+    const product_store = productStore();
+    return { product_store };
+  },
   computed: {
-    ...mapState("product", ["products"]),
+    products() {
+      return this.product_store.getAllProducts;
+    },
   },
   components: { ProductCard },
   methods: {
-    ...mapActions("product", ["getAllProducts", "addToCart", "removeFromCart"]),
+    getProductsFromWeb() {
+      this.product_store.getProductsFromWeb();
+    },
+    addToCart(product) {
+      this.product_store.addToCart(product);
+    },
+    removeFromCart(product) {
+      this.product_store.removeFromCart(product);
+    },
   },
   mounted() {
-    this.getAllProducts();
+    this.getProductsFromWeb();
   },
 };
 </script>

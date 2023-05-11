@@ -33,20 +33,33 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "pinia";
+import { accountStore } from "@/stores/account";
+import { productStore } from "@/stores/product";
+
 export default {
   name: "CartView",
+  setup() {
+    const account_store = accountStore();
+    const product_store = productStore();
+    return { account_store, product_store };
+  },
   data() {
     return {
       totalPrice: 0,
     };
   },
   computed: {
-    ...mapState("product", ["cart"]),
-    ...mapState("account", ["user"]),
+    cart() {
+      return this.product_store.cart;
+    },
+    user() {
+      return this.account_store.user;
+    },
   },
   methods: {
-    ...mapActions("product", ["removeFromCart"]),
+    removeFromCart(product) {
+      return this.product_store.removeFromCart(product);
+    },
     calcPrice() {
       this.cart.forEach((element) => {
         this.totalPrice += element.price * element.quantity;
